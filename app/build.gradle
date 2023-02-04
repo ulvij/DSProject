@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+ext {
+    daggerHiltAndroidVersion = "2.44.2"
+    daggerHiltVersion = "1.0.0"
+}
+
+android {
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.testapp"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    api project(":data")
+    implementation project(":domain")
+    implementation project(":presentation")
+    
+    // Logger
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    //DI
+    implementation "com.google.dagger:hilt-android:$daggerHiltAndroidVersion"
+    implementation "androidx.hilt:hilt-common:$daggerHiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$daggerHiltAndroidVersion"
+    kapt "androidx.hilt:hilt-compiler:$daggerHiltVersion"
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
